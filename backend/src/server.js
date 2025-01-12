@@ -4,14 +4,19 @@ const bodyParser = require('body-parser');
 const { keyValueRouter } = require('./routes/store');
 const { healthRouter } = require('./routes/health');
 
-const port = process.env.PORT;
+const port = process.env.LOCALHOST_PORT;
 const app = express();
 
 app.use(bodyParser.json());
+app.get('/', (req, res) => {
+  return res.json({
+    message: 'Welcome to kv-App. The App for key value pair retrieval..',
+  });
+});
 app.use('/health', healthRouter);
 app.use('/store', keyValueRouter);
 
-console.log('Connecting to DB');
+console.log('Connecting to DB!!!');
 mongoose
   .connect(
     `mongodb://${process.env.MONGODB_HOST}/${process.env.KEY_VALUE_DB}`,
